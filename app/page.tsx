@@ -90,15 +90,25 @@ export default function SplitBillCalculator() {
   return (
     <main className="min-h-screen bg-[#F4F4F0] p-4 md:p-8 flex items-center justify-center font-sans text-black selection:bg-black selection:text-white">
       <div className="w-full max-w-lg bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8">
-        <header className="mb-8 border-b-4 border-black pb-4">
-          <h1 className="text-4xl font-black uppercase tracking-tighter">
-            Split Calculator
-          </h1>
-          <p className="font-bold mt-2 text-sm font-mono text-gray-600">
-            A simple calculator to split a bill on the Stellar network.
-          </p>
-        </header>
+        <header className="mb-8 border-b-4 border-black pb-4 flex justify-between items-end gap-4">
+          <div>
+            <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter">
+              Split Calculator
+            </h1>
+            <p className="font-bold mt-2 text-lg sm:text-xl font-mono text-gray-600">
+              On the Stellar network.
+            </p>
+          </div>
 
+          <a
+            href="https://github.com/dexterhere-2k/Stela"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:translate-x-[4px] active:shadow-none transition-all px-4 py-2 font-black uppercase tracking-wider text-sm flex-shrink-0"
+          >
+            GitHub ↗
+          </a>
+        </header>
         <AnimatePresence mode="wait">
           {error && (
             <motion.div
@@ -120,7 +130,6 @@ export default function SplitBillCalculator() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               onClick={connect}
-              // The tactile classes: it compresses the shadow and moves physically down-right on active click
               className="w-full bg-[#B8FF9F] border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-[6px] active:translate-x-[6px] active:shadow-none transition-all duration-150 py-4 font-black text-2xl uppercase"
             >
               Connect Wallet
@@ -230,7 +239,7 @@ export default function SplitBillCalculator() {
                     className="relative mt-8 p-6 bg-white border-4 border-black text-left font-mono overflow-hidden"
                   >
                     <h3 className="font-black text-2xl uppercase border-b-4 border-black pb-2 mb-4">
-                      Receipt // TX_Valid
+                      Receipt
                     </h3>
 
                     <div className="space-y-3 text-sm font-bold uppercase">

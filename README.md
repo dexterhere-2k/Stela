@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stellar Split Bill 
 
-## Getting Started
+**Live Deployment:** [https://stela-mauve.vercel.app/](https://stela-mauve.vercel.app/)
 
-First, run the development server:
+## Project Description
+Split Bill is a decentralized application built for the Stellar Frontend Challenge (Level 1). It acts as a precise, fractional bill-splitting tool on the Stellar Testnet. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+Instead of a basic "send/receive" interface, this app allows a user to input a total bill and the size of their party. The application mathematically derives the exact fractional XLM owed per person, builds the `Operation.payment` payload, and handles the XDR serialization and signing process via the Freighter wallet. It is built with a highly tactile, Neobrutalist UI and engineered with strict separation of blockchain logic from the React component tree.
+
+## Screenshots
+(public/)
+
+## Setup Instructions (How to run locally)
+
+### Prerequisites
+* Node.js 18+
+* [Freighter Wallet Extension](https://www.freighter.app/) installed in your browser.
+* Freighter network set to **Testnet** (via the gear icon in the extension).
+
+### Installation & Execution
+
+1. **Clone the repository:**
+git clone https://github.com/dexterhere-2k/stela.git
+cd stela
+
+2. **Install dependencies:**  
+*(This project was scaffolded with pnpm, but npm or yarn will also work).*
+pnpm install
+
+3. **Run the local development server:**
 pnpm dev
-# or
-bun dev
-```
+*Note: This project utilizes a custom next.config.mjs to polyfill native Node.js modules (fs, crypto) required by the Stellar SDK in the browser environment.*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. **Open the App:**  
+Navigate to http://localhost:3000 in your Freighter-enabled browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Challenge Requirements Fulfilled
 
-## Learn More
+- **Wallet Setup:** Deep integration with the Freighter browser extension.
+- **Wallet Connection:** Clean connect/disconnect lifecycle managed via a custom React hook (useStellarWallet).
+- **Balance Handling:** Queries the Horizon REST API to fetch and render the connected wallet's native XLM balance.
+- **Transaction Flow:** Mathematically derives exact split amounts, constructs the payload, and manages the signing pipeline.
+- **Development Standards:** Implements a strict service-layer architecture (services/stellar.ts), robust error interception for user cancellations, and animated UI loading/success states.
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **Framework:** Next.js 15 (App Router)
+* **Language:** TypeScript
+* **Blockchain SDK:** @stellar/stellar-sdk, @stellar/freighter-api
+* **Styling:** Tailwind CSS (Custom Neobrutalist design system)
+* **Motion:** Framer Motion (Hardware-accelerated micro-interactions)
