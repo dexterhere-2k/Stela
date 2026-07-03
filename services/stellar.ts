@@ -16,6 +16,7 @@ export const fetchBalance = async (pubKey: string): Promise<string> => {
     // filter blance arr to return native XLM
     const nativeBal = account.balances.find((a) => a.asset_type === "native");
     return nativeBal ? nativeBal.balance : "0.00000";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     if (err.response?.status === 404) {
       throw new Error("Accountn not found.");
@@ -24,28 +25,34 @@ export const fetchBalance = async (pubKey: string): Promise<string> => {
   }
 };
 
-export const executePayment = async(
+export const executePayment = async (
   sourcePubKey: string,
   destPubKey: string,
-  amt:string
-): Promise<string>{
-  const srcAccount=await horizonServer.loadAccount(sourcePubKey)
+  amt: string,
+): Promise<string> => {
+  const srcAccount = await horizonServer.loadAccount(sourcePubKey);
   const txn = new TransactionBuilder(srcAccount, {
     fee: BASE_FEE,
-    networkPassphrase:Networks.TESTNET
-  }).addOperation(
-    Operation.payment({
-            destination: destPubKey,
-            asset: Asset.native(),
-            amount: amt,        //sdk require amt to be string
-          })
-        )
-        .setTimeout(30)
-        .build();
-  const rawTxXdr = txn.toXDR()
-  const signResult = await signTransaction(rawTxXdr, { networkPassphrase: "TESTNET" });
+    networkPassphrase: Networks.TESTNET,
+  })
+    .addOperation(
+      Operation.payment({
+        destination: destPubKey,
+        asset: Asset.native(),
+        amount: amt, //sdk require amt to be string
+      }),
+    )
+    .setTimeout(30)
+    .build();
+  const rawTxXdr = txn.toXDR();
+  const signResult = await signTransaction(rawTxXdr, {
+    networkPassphrase: "TESTNET",
+  });
   if (signResult.error) throw new Error(signResult.error);
-  const signedTransaction = TransactionBuilder.fromXDR(signResult.signedTxXdr, Networks.TESTNET);
+  const signedTransaction = TransactionBuilder.fromXDR(
+    signResult.signedTxXdr,
+    Networks.TESTNET,
+  );
   const response = await horizonServer.submitTransaction(signedTransaction);
   return response.hash;
-}
+};
