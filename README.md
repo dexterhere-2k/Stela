@@ -8,7 +8,7 @@ Split Bill is a decentralized application built for the Stellar Frontend Challen
 Instead of a basic "send/receive" interface, this app allows a user to input a total bill and the size of their party. The application mathematically derives the exact fractional XLM owed per person, builds the `Operation.payment` payload, and handles the XDR serialization and signing process via the Freighter wallet. It is built with a highly tactile, Neobrutalist UI and engineered with strict separation of blockchain logic from the React component tree.
 
 ## Screenshots
-(public/)
+![Screenshot](public/)
 
 ## Setup Instructions (How to run locally)
 
