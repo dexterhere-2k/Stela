@@ -19,7 +19,7 @@ export const fetchBalance = async (pubKey: string): Promise<string> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     if (err.response?.status === 404) {
-      throw new Error("Accountn not found.");
+      throw new Error("Account not found.");
     }
     throw new Error("Failed to fetch balance.");
   }
@@ -46,9 +46,16 @@ export const executePayment = async (
     .build();
   const rawTxXdr = txn.toXDR();
   const signResult = await signTransaction(rawTxXdr, {
-    networkPassphrase: "TESTNET",
+    networkPassphrase: Networks.TESTNET,
   });
-  if (signResult.error) throw new Error(signResult.error);
+  if (signResult.error) {
+    const errorMessage =
+      typeof signResult.error === "string"
+        ? signResult.error
+        : JSON.stringify(signResult.error);
+
+    throw new Error(errorMessage);
+  }
   const signedTransaction = TransactionBuilder.fromXDR(
     signResult.signedTxXdr,
     Networks.TESTNET,
